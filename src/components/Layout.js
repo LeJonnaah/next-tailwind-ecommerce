@@ -4,26 +4,34 @@ import Link from 'next/link'
 import { useContext } from 'react'
 import { Store } from '@/utils/Store'
 import { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify'
+import { useSession } from 'next-auth/react'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Layout({ title, children }) {
+
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
     const [cartItemCount, setCartItemCount] = React.useState(0);
+    const { status, data: session } = useSession();
 
     useEffect(() => {
         setCartItemCount(cart.cartItems.reduce((a, c) => a + Number(c.quantity), 0))
-    }, [ cart.cartItems ])
-    
+    }, [cart.cartItems])
+
 
 
     return (
         <>
             <Head>
-                <title>{title ? title + ' ecommerce':'ecommerce'}</title>
+                <title>{title ? title + ' ecommerce' : 'ecommerce'}</title>
                 <meta name="description" content="Ecommerce website" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
+            <ToastContainer position='bottom-center' limit={1} />
+
             <div className='flex flex-col min-h-screen justify-between'>
                 <header>
                     <nav className='flex h-12 justify-between shadow-md items-center px-4'>
@@ -35,15 +43,21 @@ export default function Layout({ title, children }) {
                                 Cart
                                 {cartItemCount > 0 && (
                                     <span className='ml-1 rounded-full bg-red-400 px-2 py-1 text-xs font-bold text-white'>
-                                        { cartItemCount }
+                                        {cartItemCount}
                                     </span>
-                                    )}
+                                )}
                             </Link>
-                            <Link href='/login' className='text-lg font-bold p-2'>
-                                Login
-                            </Link>
+
+                            {status === 'loading' ? (
+                                'Loading'
+                            ) : session?.user ? (
+                                session.user.name
+                            ) : (
+                                <Link href='/login' className='text-lg font-bold p-2'>
+                                    Login
+                                </Link>
+                            )}
                         </div>
-                            
                     </nav>
                 </header>
 
