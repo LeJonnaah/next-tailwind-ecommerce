@@ -4,6 +4,7 @@ const data = {
     products: [
         {
             name: 'Nike Slim Shirt',
+            slug: 'nike-slim-shirt',
             category: 'Shirts',
             image: '/images/shirt1.jpg',
             price: 120,
@@ -15,6 +16,7 @@ const data = {
         },
         {
             name: 'Adidas Fit Shirt',
+            slug: 'adidas-fit-shirt',
             category: 'Shirts',
             image: '/images/shirt2.jpg',
             price: 100,
@@ -26,6 +28,7 @@ const data = {
         },
         {
             name: 'Lacoste Free Shirt',
+            slug: 'lacoste-free-shirt',
             category: 'Shirts',
             image: '/images/shirt3.jpg',
             price: 220,

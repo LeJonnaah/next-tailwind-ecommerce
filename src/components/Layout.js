@@ -3,10 +3,17 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { Store } from '@/utils/Store'
+import { useEffect } from 'react'
 
 export default function Layout({ title, children }) {
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
+    const [cartItemCount, setCartItemCount] = React.useState(0);
+
+    useEffect(() => {
+        setCartItemCount(cart.cartItems.reduce((a, c) => a + Number(c.quantity), 0))
+    }, [ cart.cartItems ])
+    
 
 
     return (
@@ -26,9 +33,9 @@ export default function Layout({ title, children }) {
                         <div>
                             <Link href='/cart' className='text-lg font-bold p-2'>
                                 Cart
-                                {cart.cartItems.length > 0 && (
+                                {cartItemCount > 0 && (
                                     <span className='ml-1 rounded-full bg-red-400 px-2 py-1 text-xs font-bold text-white'>
-                                        {cart.cartItems.reduce((a, c) => a + Number(c.quantity), 0)}
+                                        { cartItemCount }
                                     </span>
                                     )}
                             </Link>

@@ -10,8 +10,9 @@ import { Store } from '@/utils/Store';
 export default function ProductScreen() {
 
     const { state, dispatch } = useContext(Store);
+    const router = useRouter();
 
-    const query = useRouter();
+    const { query } = useRouter();
     const { slug } = query;
     const product = data.products.find((a) => a.slug === slug);
     if (!product) {
@@ -24,6 +25,7 @@ export default function ProductScreen() {
         
         if (product.countInStock >= quantity) {
             dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+        router.push('/cart');
         }
 
         if (quantity > product.countInStock) {
