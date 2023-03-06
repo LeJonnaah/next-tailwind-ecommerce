@@ -4,10 +4,12 @@ import React, { useContext } from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
 function CartScreen() {
 
     const { state, dispatch } = useContext(Store);
+    const router = useRouter();
 
     const {
         cart: { cartItems },
@@ -69,7 +71,10 @@ function CartScreen() {
                 <div className='card p-5'>
                     <div className='flex justify-between'>
                         <h2 className='text-xl'>Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)} items): ${cartItems.reduce((a, c) => a + c.price * c.quantity, 0)}</h2>
-                        <button className='primary-button' type='button' disabled={cartItems.length === 0}>
+                        <button className='primary-button'
+                            onClick={() => { router.push('login?redirect=/shipping') }} 
+                            type='button'
+                            disabled={cartItems.length === 0}>
                             Proceed to Checkout
                         </button>
                     </div>
