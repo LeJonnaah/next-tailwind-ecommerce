@@ -1,15 +1,15 @@
-import db from '../../utils/db';
 import data from '../../utils/data';
+import db from '../../utils/db';
+import Product from 'models/Product';
 import User from 'models/User';
 
 const handler = async (req, res) => {
-
-    const { dbConnect, dbDisconnect } = db;
-    await dbConnect();
+    await db.connect();
     await User.deleteMany();
     await User.insertMany(data.users);
-    await dbDisconnect();
-    res.send({ message: 'Seed was executed successfully' });
-}
-
+    await Product.deleteMany();
+    await Product.insertMany(data.products);
+    await db.disconnect();
+    res.send({ message: 'seeded successfully' });
+};
 export default handler;
