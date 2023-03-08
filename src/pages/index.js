@@ -1,4 +1,3 @@
-import data from "../utils/data";
 import Layout from "../components/Layout";
 import ProductItem from "../components/ProductItem";
 import db from "../utils/db";
