@@ -14,7 +14,6 @@ export default function ShippingScreen() {
         handleSubmit,
         formState: { errors },
         setValue,
-        getValues,
     } = useForm()
 
     const router = useRouter()
