@@ -6,6 +6,7 @@ import { useContext } from 'react'
 import { Store } from '@/utils/Store'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function ShippingScreen() {
 
@@ -21,7 +22,7 @@ export default function ShippingScreen() {
     const { cart } = state;
     const { shippingAddress } = cart;
 
-    React.useEffect(() => {
+    useEffect(() => {
             setValue('fullName', shippingAddress.fullName)
             setValue('address', shippingAddress.address)
             setValue('city', shippingAddress.city)
