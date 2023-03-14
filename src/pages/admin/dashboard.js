@@ -72,17 +72,17 @@ function AdminDashboardScreen() {
                             </Link>
                         </li>
                         <li>
-                            <Link href='/admin/orders' className='font-bold'>
+                            <Link href='/admin/orders'>
                                 Orders
                             </Link>
                         </li>
                         <li>
-                            <Link href='/admin/products' className='font-bold'>
+                            <Link href='/admin/products'>
                                 Products
                             </Link>
                         </li>
                         <li>
-                            <Link href='/admin/users' className='font-bold'>
+                            <Link href='/admin/users'>
                                 Users
                             </Link>
                         </li>
