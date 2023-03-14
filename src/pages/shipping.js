@@ -23,13 +23,13 @@ export default function ShippingScreen() {
     const { shippingAddress } = cart;
 
     useEffect(() => {
-            setValue('fullName', shippingAddress.fullName)
-            setValue('address', shippingAddress.address)
-            setValue('city', shippingAddress.city)
-            setValue('postalCode', shippingAddress.postalCode)
-            setValue('country', shippingAddress.country)
-            setValue('phone', shippingAddress.phone)
-    }, [ setValue, shippingAddress ])
+        setValue('fullName', shippingAddress.fullName);
+        setValue('address', shippingAddress.address);
+        setValue('city', shippingAddress.city);
+        setValue('postalCode', shippingAddress.postalCode);
+        setValue('country', shippingAddress.country);
+        setValue('phone', shippingAddress.phone);
+    }, [setValue, shippingAddress]);
 
     const submitHandler = ( {fullName, address, city, postalCode, country, phone} ) => { 
         dispatch({
