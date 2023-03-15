@@ -42,3 +42,7 @@ a {
 .alert-success {
   @apply my-3 rounded-lg bg-green-100 p-3 text-green-700
 }
+
+.default-button {
+  @apply bg-gray-500 text-white font-bold py-2 px-4 rounded outline-none hover:bg-gray-600 active:bg-gray-700
+}
