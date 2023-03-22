@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useContext } from 'react'
@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Menu } from '@headlessui/react'
 import DropdownLink from './DropdownLink'
 import Cookies from 'js-cookie'
+import { useRouter } from 'next/router'
+
 
 export default function Layout({ title, children }) {
 
@@ -28,6 +30,14 @@ export default function Layout({ title, children }) {
         signOut({ callbackUrl: '/login' })
     }
 
+    const [query, setQuery] = useState('');
+
+    const router = useRouter();
+    const submitHandler = (e) => {
+        e.preventDefault();
+        router.push(`/search?query=${query}`);
+    };
+
     return (
         <>
             <Head>
@@ -39,17 +49,32 @@ export default function Layout({ title, children }) {
 
             <ToastContainer position='bottom-center' limit={1} />
 
-            <div className='flex flex-col min-h-screen justify-between'>
+            <div className="flex min-h-screen flex-col justify-between ">
                 <header>
-                    <nav className='flex h-12 justify-between shadow-md items-center px-4'>
-                        <Link href='/' className='text-lg font-bold'>
-                            Home
-                        </Link>
+                    <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+                        <Link href="/" className="text-lg font-bold">ecommerce</Link>
+                        <form
+                            onSubmit={submitHandler}
+                            className="mx-auto  hidden w-full justify-center md:flex"
+                        >
+                            <input
+                                onChange={(e) => setQuery(e.target.value)}
+                                type="text"
+                                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                                placeholder="Search products"
+                            />
+                            <button
+                                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                                type="submit"
+                                id="button-addon2"
+                            >
+                            </button>
+                        </form>
                         <div>
-                            <Link href='/cart' className='text-lg font-bold p-2'>
+                            <Link href="/cart" className="p-2">
                                 Cart
                                 {cartItemCount > 0 && (
-                                    <span className='ml-1 rounded-full bg-red-400 px-2 py-1 text-xs font-bold text-white'>
+                                    <span className="ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white">
                                         {cartItemCount}
                                     </span>
                                 )}
@@ -58,40 +83,47 @@ export default function Layout({ title, children }) {
                             {status === 'loading' ? (
                                 'Loading'
                             ) : session?.user ? (
-                                <Menu as="div" className="relative inline-block text-left">
-                                    <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+                                <Menu as="div" className="relative inline-block">
+                                    <Menu.Button className="text-blue-600">
                                         {session.user.name}
                                     </Menu.Button>
-                                    <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                    <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                                         <Menu.Item>
-                                            <DropdownLink className='dropdown-link' href='/profile'>
+                                            <DropdownLink className="dropdown-link" href="/profile">
                                                 Profile
                                             </DropdownLink>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <DropdownLink className='dropdown-link' href='/order-history'>
+                                            <DropdownLink
+                                                className="dropdown-link"
+                                                href="/order-history"
+                                            >
                                                 Order History
                                             </DropdownLink>
                                         </Menu.Item>
-                                        <Menu.Item>
-                                            <Link className='dropdown-link' href='#' onClick={logoutClickHandler}>
-                                                Logout
-                                            </Link>
-                                        </Menu.Item>|
                                         {session.user.isAdmin && (
                                             <Menu.Item>
-                                                <DropdownLink className='dropdown-link' href='/admin/dashboard'>
-                                                    Dashboard
+                                                <DropdownLink
+                                                    className="dropdown-link"
+                                                    href="/admin/dashboard"
+                                                >
+                                                    Admin Dashboard
                                                 </DropdownLink>
                                             </Menu.Item>
                                         )}
+                                        <Menu.Item>
+                                            <a
+                                                className="dropdown-link"
+                                                href="#"
+                                                onClick={logoutClickHandler}
+                                            >
+                                                Logout
+                                            </a>
+                                        </Menu.Item>
                                     </Menu.Items>
                                 </Menu>
-
                             ) : (
-                                <Link href='/login' className='text-lg font-bold p-2'>
-                                    Login
-                                </Link>
+                                <Link href="/login" className="p-2">Login</Link>
                             )}
                         </div>
                     </nav>
